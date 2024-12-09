@@ -9,14 +9,19 @@ import { CardContact } from "../component/cardContact";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
-
+	console.log(store);
+	
+	useEffect(()=>{
+        actions.createUser()
+    },[])
+	
 	return (
 		<div className="container-fluid mt-5">
 			<div className="d-flex justify-content-end mb-4">
 				<a className="btn btn-success" href="/new-contact" role="button">Añadir contacto</a>
 			</div>
 			<ul className="list-group">
-				{store.demo.map((item, index) => {
+				{store.contacts.map((item, index) => {
 					return (
 						<li
 							key={index}
