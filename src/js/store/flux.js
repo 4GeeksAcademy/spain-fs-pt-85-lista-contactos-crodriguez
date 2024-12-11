@@ -12,15 +12,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 					console.log(response);
 					
-					return true
+					return (true)
 				} catch (error) {
 					console.log(error);
-					return false
+					return (false)
 				}
 			},
 			getContacts: async () => {
 				try {
-					let response = await fetch('https://playground.4geeks.com/contact/agendas/crodriguez');
+					let response = await fetch('https://playground.4geeks.com/contact/agendas/crodriguez', {
+						method: "GET"
+					});
 					let data = await response.json()
 					setStore({contacts:data.contacts});
 					console.log(data);
@@ -30,19 +32,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
-			createContact: async () => {
+			createContact: async (name, email, phone, address) => {
+				console.log(name, email, phone, address);
+				
 				try {
 					let response = await fetch('https://playground.4geeks.com/contact/agendas/crodriguez/contacts', {
 						method: "POST",
-						body: {
-							"name": "",
-							"phone": "",
-							"email": "",
-							"address": ""
-						  }
+						body: JSON.stringify({
+							name: name,
+							phone: email,
+							email: phone,
+							address: address
+						  }),
+						headers: {
+							"Content-Type": "application/json"
+				  		}
 					});
+					console.log(response);
+
 					let data = await response.json()
-					setStore({contacts:data.contacts});
+					console.log(data);
+					// setStore({contacts:data.contacts});
 					return true
 				} catch (error) {
 					console.log(error);

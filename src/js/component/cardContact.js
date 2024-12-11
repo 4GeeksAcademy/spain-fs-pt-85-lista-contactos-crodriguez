@@ -2,32 +2,35 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { Context } from "../store/appContext";
+import PropTypes from 'prop-types';
+
 
 import "../../styles/demo.css";
-import Bootstrap from "bootstrap";
 
-export const CardContact = () => {
+export const CardContact = (props) => {
 	const { store, actions } = useContext(Context);
     console.log(store);
-
+    
     useEffect(()=>{
         actions.getContacts()
     },[])
     return (
-		<div className="card border-light mb-3">
+		<div className="card border-light mb-3 w-100">
             <div className="row g-0">
-                <div className="col-md-2">
-                    <img src="" className="img-fluid rounded-start" alt="..." />
+                <div className="col-2">
+                    <img src="" className="img-fluid rounded-start" alt="" />
                 </div>
-                <div className="col-md-8">
+                <div className="col-8">
                     <div className="card-body">
-                    {/* {store.contacts.map((item)=><li>{item.name}</li>)} */}
-                        <h5 className="card-title">{item.name}</h5>
-                        <p className="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <p className="card-text"><small className="text-body-secondary">Last updated 3 mins ago</small></p>
+                    <h5 className="card-title">{props.name}</h5>
+                    <p className="card-text">{props.phone}</p>
+                    <p className="card-text">{props.address}</p>
+                    <p className="card-text">{props.email}</p>
+                    <p className="card-text">{props.email}</p>
+                    
                     </div>
                 </div>
-                <div className="col-md-2">
+                <div className="col-2">
                     <i></i>
                     <i></i>
                 </div>
@@ -36,3 +39,9 @@ export const CardContact = () => {
 	);
 };
 
+CardContact.propTypes = {
+    name: PropTypes.string,
+    phone: PropTypes.string,
+    email: PropTypes.string,
+    address: PropTypes.string,
+};
