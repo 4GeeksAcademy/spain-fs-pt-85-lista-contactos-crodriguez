@@ -51,14 +51,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(response);
 
 					let data = await response.json()
+					setStore({contacts:data.contacts});
 					console.log(data);
-					// setStore({contacts:data.contacts});
 					return true
 				} catch (error) {
 					console.log(error);
 					return false
 				}
 			},
+			deleteContact: async (id) => {
+                try {
+					let response = await fetch(`https://playground.4geeks.com/contact/agendas/crodriguez/contacts/${id}`, {
+                    method: "DELETE",
+                })
+                let data = await response.json()
+					console.log(data);
+					setStore({contacts:data.contacts});
+					return true
+				} catch (error) {
+					console.log(error);
+					return false
+				}
+            },
+
 			// exampleFunction: () => {
 			// 	getActions().changeColor(0, "green");
 			// },

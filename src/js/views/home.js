@@ -6,6 +6,8 @@ import { Context } from "../store/appContext";
 import "../../styles/demo.css";
 
 import { CardContact } from "../component/cardContact";
+import { ModalConfirm } from "../component/modal";
+
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
@@ -14,9 +16,9 @@ export const Home = () => {
 	useEffect(()=>{
         actions.createUser()
     },[])
-	useEffect(()=>{
-        actions.getContacts()
-    },[])
+	// useEffect(()=>{
+    //     actions.getContacts()
+    // },[])
 	
 	return (
 		<div className="container-fluid mt-5">
