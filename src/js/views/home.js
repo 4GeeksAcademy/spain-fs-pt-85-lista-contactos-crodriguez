@@ -11,15 +11,18 @@ import { ModalConfirm } from "../component/modal";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
+	const [mostrar, setMostrar] = useState(0);
+	const [contactId, setContactId] = useState(null); 
+
+
 	console.log(store);
 	
 	useEffect(()=>{
         actions.createUser()
+		actions.getContacts()
     },[])
-	// useEffect(()=>{
-    //     actions.getContacts()
-    // },[])
 	
+
 	return (
 		<div className="container-fluid mt-5">
 			<div className="d-flex justify-content-end mb-4">
@@ -31,12 +34,12 @@ export const Home = () => {
 						<div
 							key={index}
 							className="list-group-item d-flex justify-content-between">
-								<CardContact  name={item.name} email={item.email} phone={item.phone} address={item.address}	/>
+								<CardContact id={item.id} name={item.name} email={item.email} phone={item.phone} address={item.address}	setMostrar={setContactId}/>
 						</div>
 					);
 				})}
 			</ul>
-			
+			<ModalConfirm mostrar={contactId !== null} setMostrar={setMostrar} id={contactId} />
 		</div>
 	);
 };

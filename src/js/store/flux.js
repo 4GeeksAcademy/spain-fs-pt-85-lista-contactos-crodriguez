@@ -64,10 +64,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					let response = await fetch(`https://playground.4geeks.com/contact/agendas/crodriguez/contacts/${id}`, {
                     method: "DELETE",
                 })
-                let data = await response.json()
-					console.log(data);
-					setStore({contacts:data.contacts});
-					return true
+
+				const contacts = getStore().contacts.filter(contact => contact.id !== id);
+        		setStore({ contacts });
+
+				return true;
 				} catch (error) {
 					console.log(error);
 					return false
