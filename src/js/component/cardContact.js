@@ -3,19 +3,23 @@ import { Link } from "react-router-dom";
 
 import { Context } from "../store/appContext";
 import PropTypes from 'prop-types';
-import ModalConfirm from "./modal";
+// import ModalConfirm from "./modal";
 
 import "../../styles/demo.css";
 
 export const CardContact = ({ id, name, email, phone, address, setMostrar }) => {
 	const { store, actions } = useContext(Context);
+    
     console.log(store);
     
     useEffect(()=>{
         actions.getContacts()
     },[])
 
-    
+    const handleDelete = () => {
+        setMostrar({id:id, stateModal:true}); 
+    };
+
     return (
 		<div className="card border-light mb-3 w-100">
             <div className="row g-0">
@@ -32,7 +36,7 @@ export const CardContact = ({ id, name, email, phone, address, setMostrar }) => 
                 </div>
                 <div className="col-2 d-flex flex-row-reverse">
                     <i className="fa-solid fa-pen p-2"></i>
-                    <i className="fa-solid fa-trash p-2" data-bs-target="#confirmacion" onClick={()=>setMostrar(id)}></i>
+                    <i className="fa-solid fa-trash p-2" data-bs-target="#confirmacion" onClick={()=>setMostrar({id,stateModal:true})}></i>
                 </div>
             </div>
         </div>

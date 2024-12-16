@@ -33,7 +33,7 @@ export const ModalConfirm = ({ id, mostrar, setMostrar }) => {
                         <p>Are you sure to delete?</p>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" onClick={handleClose}>Close</button>
+                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleClose}>Close</button>
                         <button type="button" className="btn btn-primary" onClick={handleDelete}>Delete</button>
                     </div>
                 </div>
