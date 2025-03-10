@@ -22,7 +22,7 @@ export const Home = () => {
 	useEffect(()=>{
         actions.createUser()
 		actions.getContacts()
-    },[])
+    }, []);
 
 	return (
 		<div className="container-fluid mt-5">
@@ -30,15 +30,15 @@ export const Home = () => {
 				<a className="btn btn-success" href="/new-contact" role="button">Añadir contacto</a>
 			</div>
 			<ul className="list-group">
-				{store.contacts.map((item, index) => {
-					return (
-						<div
-							key={index}
-							className="list-group-item d-flex justify-content-between">
-								<CardContact id={item.id} name={item.name} email={item.email} phone={item.phone} address={item.address}	setMostrar={setMostrar}/>
-						</div>
-					);
-				})}
+				{store.contacts && store.contacts.map((item, index) => { // Añade la verificación condicional
+                    return (
+                        <div
+                            key={index}
+                            className="list-group-item d-flex justify-content-between">
+                            <CardContact id={item.id} name={item.name} email={item.email} phone={item.phone} address={item.address} setMostrar={setMostrar} />
+                        </div>
+                    );
+                })}
 			</ul>
 			<ModalConfirm mostrar={mostrar.stateModal} setMostrar={setMostrar} id={mostrar.id} />
 		</div>

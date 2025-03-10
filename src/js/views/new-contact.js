@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { Context } from "../store/appContext";
 
@@ -7,6 +8,7 @@ import "../../styles/demo.css";
 
 export const NuevoContacto = () => {
 	const { store, actions } = useContext(Context);
+	const navigate = useNavigate();
 
 	const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
@@ -23,6 +25,13 @@ export const NuevoContacto = () => {
 	function handleContact(event) {
 		event.preventDefault()
 		actions.createContact(name, email, phone, address)
+        .then(() => {
+			console.log("createContact resuelto, navegando a /");
+            navigate("/");
+        })
+        .catch((error) => {
+            console.error("Error al crear el contacto:", error);
+        });
 		// console.log(name);
 		// console.log(phone);
 		// console.log(address);

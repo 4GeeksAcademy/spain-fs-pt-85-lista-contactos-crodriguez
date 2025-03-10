@@ -29,13 +29,15 @@ export const CardContact = ({ id, name, email, phone, address, setMostrar }) => 
                 <div className="col-8">
                     <div className="card-body">
                         <h5 className="card-title">{name}</h5>
-                        <p className="card-text"><i className="fa-solid fa-location-dot me-2"></i>{address}</p>
                         <p className="card-text"><i className="fa-solid fa-phone-flip me-2"></i>{phone}</p>
                         <p className="card-text"><i className="fa-solid fa-envelope me-2"></i>{email}</p>
+                        <p className="card-text"><i className="fa-solid fa-location-dot me-2"></i>{address}</p>                        
                     </div>
                 </div>
                 <div className="col-2 d-flex flex-row-reverse">
-                    <i className="fa-solid fa-pen p-2"></i>
+                    <Link to={`/edit-contact/${id}`} className="btn btn-link p-0 me-3">
+                        <i className="fa-solid fa-pen p-2"></i>
+                    </Link>
                     <i className="fa-solid fa-trash p-2" data-bs-target="#confirmacion" onClick={()=>setMostrar({id,stateModal:true})}></i>
                 </div>
             </div>

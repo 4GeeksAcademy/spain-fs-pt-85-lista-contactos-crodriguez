@@ -1,7 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			contacts: []
+			contacts: [],
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -32,32 +32,40 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
 			},
-			createContact: async (name, email, phone, address) => {
+			createContact: (name, email, phone, address) => {
 				console.log(name, email, phone, address);
-				
-				try {
-					let response = await fetch('https://playground.4geeks.com/contact/agendas/crodriguez/contacts', {
-						method: "POST",
-						body: JSON.stringify({
-							name: name,
-							phone: email,
-							email: phone,
-							address: address
-						  }),
-						headers: {
-							"Content-Type": "application/json"
-				  		}
-					});
-					console.log(response);
-
-					let data = await response.json()
-					setStore({contacts:data.contacts});
-					console.log(data);
-					return true
-				} catch (error) {
-					console.log(error);
-					return false
-				}
+			
+				return new Promise(async (resolve, reject) => {
+					try {
+						let response = await fetch('https://playground.4geeks.com/contact/agendas/crodriguez/contacts', {
+							method: "POST",
+							body: JSON.stringify({
+								name: name,
+								phone: phone,
+								email: email,
+								address: address
+							}),
+							headers: {
+								"Content-Type": "application/json"
+							}
+						});
+			
+						console.log(response);
+			
+						if (!response.ok) {
+							reject(new Error(`HTTP error! status: ${response.status}`));
+							return;
+						}
+			
+						let data = await response.json();
+						setStore({ contacts: data.contacts });
+						console.log(data);
+						resolve(true);
+					} catch (error) {
+						console.log(error);
+						reject(error);
+					}
+				});
 			},
 			deleteContact: async (id) => {
                 try {
@@ -74,6 +82,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false
 				}
             },
+            editContact: async (id, contact) => {
+				try {
+					const response = await fetch(`https://playground.4geeks.com/contact/agendas/crodriguez/contacts/${id}`, {
+						method: "PUT",
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(contact)
+					});
+			
+					if (!response.ok) {
+						throw new Error(`HTTP error! status: ${response.status}`);
+					}
+			
+					const data = await response.json();
+					console.log("Contacto editado:", data);
+			
+					// Actualiza el store después de editar el contacto
+					await getActions().getContacts();
+			
+					return true;
+				} catch (error) {
+					console.error("Error al editar el contacto:", error);
+					return false;
+				}
+			},
 
 			// exampleFunction: () => {
 			// 	getActions().changeColor(0, "green");
